@@ -7,11 +7,16 @@
 # Remove existing docs directory
 Remove-Item -Path ".\docs" -Recurse -Force -ErrorAction SilentlyContinue
 
+
 # Export app using shinylive
 shinylive export .\app .\docs
 
 # Update index.html
 $content = Get-Content .\docs\index.html -Raw
 $newContent = $content -replace '<title>Shiny App</title>', '<title>gjrich mod vii</title>'
-$newContent = $newContent -replace '(<title>.*</title>)', "`$1`n    <link rel=`"icon`" type=`"image/x-icon`" href=`"app/favicon.ico`">"
+$newContent = $newContent -replace '(<title>.*</title>)', "`$1`n    <link rel=`"icon`" type=`"image/x-icon`" href=`"./favicon.ico`">"
 $newContent | Set-Content .\docs\index.html -NoNewline
+
+
+# Copy over favicon
+Copy-Item -Path ".\app\favicon.ico" -Destination ".\docs\favicon.ico" -ErrorAction SilentlyContinue

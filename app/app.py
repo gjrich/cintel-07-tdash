@@ -1,3 +1,13 @@
+# gjrich | Dec 2024
+# Palmer Penguins dashboard practice
+# Primarily used for practice with github issues / merging
+
+# make sure to install requirements.txt into your virtual environment
+
+
+
+
+# Import necessary libraries
 import seaborn as sns
 from faicons import icon_svg
 
@@ -5,6 +15,8 @@ from shiny import reactive
 from shiny.express import input, render, ui
 import palmerpenguins 
 
+
+# Load data set into penguins data frame
 df = palmerpenguins.load_penguins()
 
 ui.page_opts(title="Penguins dashboard", fillable=True)
@@ -12,6 +24,8 @@ ui.page_opts(title="Penguins dashboard", fillable=True)
 
 with ui.sidebar(title="Filter controls"):
     ui.input_slider("mass", "Mass", 2000, 6000, 6000)
+    
+    # Pick the related Species
     ui.input_checkbox_group(
         "species",
         "Species",
@@ -19,6 +33,8 @@ with ui.sidebar(title="Filter controls"):
         selected=["Adelie", "Gentoo", "Chinstrap"],
     )
     ui.hr()
+    
+    # Provides links to all of the related collateral
     ui.h6("Links")
     ui.a(
         "GitHub Source",
@@ -42,7 +58,7 @@ with ui.sidebar(title="Filter controls"):
         target="_blank",
     )
     ui.a(
-        "See also",
+        "Source Repo + Extra Info",
         href="https://github.com/denisecase/pyshiny-penguins-dashboard-express",
         target="_blank",
     )

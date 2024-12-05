@@ -18,13 +18,12 @@ import palmerpenguins
 
 from shinywidgets import render_altair
 import altair as alt
-import anywidget
 
 
 # Load data set into penguins data frame
 df = palmerpenguins.load_penguins()
 
-ui.page_opts(title="Penguins dashboard", fillable=True)
+ui.page_opts(title="Penguin Time", fillable=True)
 
 
 with ui.sidebar(title="Control the Filters"):

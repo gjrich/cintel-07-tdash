@@ -1,0 +1,9 @@
+faicons
+shiny
+shinylive
+seaborn
+pandas
+palmerpenguins
+altair
+shinywidgets
+anywidget

@@ -92,15 +92,13 @@ with ui.layout_column_wrap(fill=False):
         def bill_depth():
             return f"{filtered_df()['bill_depth_mm'].mean():.1f} mm"
 
-
 with ui.layout_columns():
     with ui.card(full_screen=True):
         ui.card_header("Bill Length & Depth")
 
         @render_altair
         def length_depth():
-            # Create base chart with specific configuration for shinylive
-            chart = (alt.Chart(filtered_df())
+            return (alt.Chart(filtered_df())
                 .mark_circle()
                 .encode(
                     x=alt.X('bill_length_mm:Q', title='Bill Length (mm)'),
@@ -108,13 +106,12 @@ with ui.layout_columns():
                     color=alt.Color('species:N', title='Species'),
                     tooltip=['species', 'bill_length_mm', 'bill_depth_mm']
                 )
+                .properties(
+                    width=400,
+                    height=300
+                )
+                .interactive()
             )
-            
-            # Configure the chart specifically for web deployment
-            return chart.configure_view(
-                continuousWidth=400,
-                continuousHeight=300
-            ).interactive()
 
     with ui.card(full_screen=True):
         ui.card_header("Penguin Data")

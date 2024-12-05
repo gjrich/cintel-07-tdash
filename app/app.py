@@ -15,6 +15,9 @@ from shiny import reactive
 from shiny.express import input, render, ui
 import palmerpenguins 
 
+from shinywidgets import render_altair
+import altair as alt
+
 
 # Load data set into penguins data frame
 df = palmerpenguins.load_penguins()
@@ -63,6 +66,8 @@ with ui.sidebar(title="Filter controls"):
         target="_blank",
     )
 
+# Generate the desired graphs
+# This formatting ensures space is evenly distributed and has no scrollbars regardless of zoom 
 
 with ui.layout_column_wrap(fill=False):
     with ui.value_box(showcase=icon_svg("earlybirds")):
@@ -91,14 +96,24 @@ with ui.layout_columns():
     with ui.card(full_screen=True):
         ui.card_header("Bill length and depth")
 
-        @render.plot
+        @render_altair
         def length_depth():
-            return sns.scatterplot(
-                data=filtered_df(),
-                x="bill_length_mm",
-                y="bill_depth_mm",
-                hue="species",
+            # Create base chart with specific configuration for shinylive
+            chart = (alt.Chart(filtered_df())
+                .mark_circle()
+                .encode(
+                    x=alt.X('bill_length_mm:Q', title='Bill Length (mm)'),
+                    y=alt.Y('bill_depth_mm:Q', title='Bill Depth (mm)'),
+                    color=alt.Color('species:N', title='Species'),
+                    tooltip=['species', 'bill_length_mm', 'bill_depth_mm']
+                )
             )
+            
+            # Configure the chart specifically for web deployment
+            return chart.configure_view(
+                continuousWidth=400,
+                continuousHeight=300
+            ).interactive()
 
     with ui.card(full_screen=True):
         ui.card_header("Penguin Data")
@@ -117,6 +132,10 @@ with ui.layout_columns():
 
 #ui.include_css(app_dir / "styles.css")
 
+
+# Reactive.calc function to update on the fly and apply the latest filters
+# See this for more info:
+# https://shiny.posit.co/py/api/express/reactive.calc.html
 
 @reactive.calc
 def filtered_df():

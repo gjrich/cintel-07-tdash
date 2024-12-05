@@ -9,7 +9,7 @@ Remove-Item -Path ".\docs" -Recurse -Force -ErrorAction SilentlyContinue
 
 
 # Export app using shinylive
-shinylive export .\app .\docs
+shinylive export app docs
 
 # Update index.html
 $content = Get-Content .\docs\index.html -Raw

@@ -106,10 +106,6 @@ with ui.layout_columns():
                     color=alt.Color('species:N', title='Species'),
                     tooltip=['species', 'bill_length_mm', 'bill_depth_mm']
                 )
-                .properties(
-                    width=400,
-                    height=300
-                )
                 .interactive()
             )
 

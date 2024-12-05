@@ -10,6 +10,7 @@
 # Import necessary libraries
 import seaborn as sns
 from faicons import icon_svg
+from pathlib import Path
 
 from shiny import reactive
 from shiny.express import input, render, ui
@@ -17,7 +18,6 @@ import palmerpenguins
 
 from shinywidgets import render_altair
 import altair as alt
-import anywidget
 
 # Load data set into penguins data frame
 df = palmerpenguins.load_penguins()

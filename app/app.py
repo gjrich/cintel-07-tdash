@@ -17,7 +17,7 @@ import palmerpenguins
 
 from shinywidgets import render_altair
 import altair as alt
-
+import anywidget
 
 # Load data set into penguins data frame
 df = palmerpenguins.load_penguins()
@@ -25,7 +25,7 @@ df = palmerpenguins.load_penguins()
 ui.page_opts(title="Penguins dashboard", fillable=True)
 
 
-with ui.sidebar(title="Filter controls"):
+with ui.sidebar(title="Control the Filters"):
     ui.input_slider("mass", "Mass", 2000, 6000, 6000)
     
     # Pick the related Species
@@ -38,9 +38,9 @@ with ui.sidebar(title="Filter controls"):
     ui.hr()
     
     # Provides links to all of the related collateral
-    ui.h6("Links")
+    ui.h6("Collateral")
     ui.a(
-        "GitHub Source",
+        "GitHub",
         href="https://github.com/gjrich/cintel-07-tdash",
         target="_blank",
     )
@@ -71,21 +71,21 @@ with ui.sidebar(title="Filter controls"):
 
 with ui.layout_column_wrap(fill=False):
     with ui.value_box(showcase=icon_svg("earlybirds")):
-        "Number of penguins"
+        "Penguin Head Count"
 
         @render.text
         def count():
             return filtered_df().shape[0]
 
     with ui.value_box(showcase=icon_svg("ruler-horizontal")):
-        "Average bill length"
+        "Average Bill Length"
 
         @render.text
         def bill_length():
             return f"{filtered_df()['bill_length_mm'].mean():.1f} mm"
 
     with ui.value_box(showcase=icon_svg("ruler-vertical")):
-        "Average bill depth"
+        "Average Bill Depth"
 
         @render.text
         def bill_depth():
@@ -94,7 +94,7 @@ with ui.layout_column_wrap(fill=False):
 
 with ui.layout_columns():
     with ui.card(full_screen=True):
-        ui.card_header("Bill length and depth")
+        ui.card_header("Bill Length & Depth")
 
         @render_altair
         def length_depth():

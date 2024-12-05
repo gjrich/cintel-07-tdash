@@ -18,7 +18,7 @@ import palmerpenguins
 
 from shinywidgets import render_altair
 import altair as alt
-import anywidget
+# import anywidget
 
 
 # Load data set into penguins data frame

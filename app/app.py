@@ -2,15 +2,12 @@
 # Palmer Penguins dashboard practice
 # Primarily used for practice with github issues / merging
 
-# make sure to install requirements.txt into your virtual environment
-
-
-
+# make sure to install /requirements.txt into your virtual environment
+# disregard /app/requirements.txt - included for github.io altair functionality 
 
 # Import necessary libraries
-import seaborn as sns
 from faicons import icon_svg
-from pathlib import Path
+
 
 from shiny import reactive
 from shiny.express import input, render, ui
@@ -19,6 +16,11 @@ import palmerpenguins
 from shinywidgets import render_altair
 import altair as alt
 
+# Future proofing too
+import seaborn as sns
+from pathlib import Path
+
+
 
 # Load data set into penguins data frame
 df = palmerpenguins.load_penguins()
@@ -26,7 +28,7 @@ df = palmerpenguins.load_penguins()
 ui.page_opts(title="Penguin Time", fillable=True)
 
 
-with ui.sidebar(title="Control the Filters"):
+with ui.sidebar(title="Flipper Filters"):
     ui.input_slider("mass", "Mass", 2000, 6000, 6000)
     
     # Pick the related Species
@@ -94,8 +96,9 @@ with ui.layout_column_wrap(fill=False):
 
 with ui.layout_columns():
     with ui.card(full_screen=True):
-        ui.card_header("Bill Length & Depth")
+        ui.card_header("Bill Length & Depth - Altair")
 
+# Swapped for Altair scatter plot
         @render_altair
         def length_depth():
             return (alt.Chart(filtered_df())
@@ -109,6 +112,8 @@ with ui.layout_columns():
                 .interactive()
             )
 
+
+    # Table of all data / searchable
     with ui.card(full_screen=True):
         ui.card_header("Penguin Data")
 
@@ -123,7 +128,7 @@ with ui.layout_columns():
             ]
             return render.DataGrid(filtered_df()[cols], filters=True)
 
-
+# Including option for later css options
 #ui.include_css(app_dir / "styles.css")
 
 
